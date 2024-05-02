@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Robot Map</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>Robot Map</h1>
+    <img id="bg" src="{{ url_for('video_feed') }}" />
+    <script>
+      let pressedKeys = {}
+      
+      document.addEventListener('keydown', function (event) {
+        if (!pressedKeys[event.key]) {
+          pressedKeys[event.key] = true
+          sendKey(event.key, true)
+        }
+      })
+      
+      document.addEventListener('keyup', function (event) {
+        if (pressedKeys[event.key]) {
+          pressedKeys[event.key] = false
+          sendKey(event.key, false)
+        }
+      })
+      
+      function sendKey(key, isPressed) {
+        $.ajax({
+          type: 'POST',
+          url: '/keypress',
+          contentType: 'application/json',
+          data: JSON.stringify({ key: key, isPressed: isPressed }),
+          success: function (response) {
+            //console.log(response)
+          },
+          error: function (err) {
+            //console.error(err)
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
