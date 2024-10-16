@@ -59,4 +59,4 @@ def video_feed():
 def startWebsite(imageGetter):
     global robot
     robot = imageGetter
-    threading.Thread(target=lambda: app.run(host="0.0.0.0", debug=True, use_reloader=False)).start()
+    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=1984, debug=True, use_reloader=False)).start()
